@@ -30,11 +30,11 @@ class CityManager: NSObject {
             let results = try self.contextManager.objectContextInstance.fetch(citiesFetch)
             if let cities = results as? [City], cities.count > 0 {
                 self.cities = cities
-                self.dispatchCompletion(completion)
+                self.dispatchFetchCitiesCompletion(completion)
                 return
             }
         } catch {
-            self.dispatchCompletion(completion)
+            self.dispatchFetchCitiesCompletion(completion)
         }
 
         DispatchQueue.global().async {
@@ -58,25 +58,43 @@ class CityManager: NSObject {
                             city.latitude = 0.0
                             city.longitude = 0.0
                         }
-
+                        city.isFav = false
                     }
                     self.contextManager.saveContext()
-                    self.dispatchCompletion(completion)
+                    self.dispatchFetchCitiesCompletion(completion)
                     
                 } else {
-                    self.dispatchCompletion(completion)
+                    self.dispatchFetchCitiesCompletion(completion)
                 }
                 
             } catch {
-                self.dispatchCompletion(completion)
+                self.dispatchFetchCitiesCompletion(completion)
             }
         }
     }
     
-    fileprivate func dispatchCompletion(_ completion: @escaping () -> ()) {
+    func setFavCity(_ id: Int64, _ fav: Bool, _ completion: @escaping (Bool) -> ()) {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+        request.predicate = NSPredicate(format: "id == %@", "\(id)")
+        
+        do {
+            guard let cities = try self.contextManager.objectContextInstance.fetch(request) as? [City] else {
+                completion(false)
+                return
+            }
+            let city = cities[0]
+            city.isFav = fav
+            self.contextManager.saveContext()
+            completion(true)
+        } catch {
+            completion(false)
+
+        }
+    }
+    
+    fileprivate func dispatchFetchCitiesCompletion(_ completion: @escaping () -> ()) {
         DispatchQueue.main.async {
             completion()
-            
         }
     }
 }

@@ -6,7 +6,8 @@ target 'Weather' do
   use_frameworks!
 
   # Pods for Weather
-
+  pod 'SideMenu', '~> 3.0'
+  
   target 'WeatherTests' do
     inherit! :search_paths
     # Pods for testing

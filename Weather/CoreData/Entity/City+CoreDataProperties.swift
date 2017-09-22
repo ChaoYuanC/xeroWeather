@@ -1,9 +1,8 @@
 //
 //  City+CoreDataProperties.swift
-//  Weather
+//  
 //
-//  Created by Chao Yuan on 9/22/17.
-//  Copyright © 2017 Chao Yuan. All rights reserved.
+//  Created by Chao Yuan on 9/23/17.
 //
 //
 
@@ -22,5 +21,6 @@ extension City {
     @NSManaged public var id: Int64
     @NSManaged public var latitude: Double
     @NSManaged public var longitude: Double
+    @NSManaged public var isFav: Bool
 
 }

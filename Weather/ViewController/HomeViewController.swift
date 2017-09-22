@@ -1,5 +1,5 @@
 //
-//  LoadingViewController.swift
+//  HomeViewController.swift
 //  Weather
 //
 //  Created by Chao Yuan on 9/22/17.
@@ -7,19 +7,16 @@
 //
 
 import UIKit
+import SideMenu
 
-class LoadingViewController: UIViewController {
+class HomeViewController: UIViewController {
 
-    @IBOutlet var indicator: UIActivityIndicatorView!
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.indicator.startAnimating()
-        
-        self.fetchCities()
+        SideMenuManager.menuAnimationBackgroundColor = UIColor(red: 0.0, green: 203/255, blue: 220/255, alpha: 1)
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,14 +35,4 @@ class LoadingViewController: UIViewController {
     }
     */
 
-    
-    func fetchCities() {
-        CityManager.sharedInstance.fetchCities {
-            self.goHomeViewController()
-        }
-    }
-    
-    func goHomeViewController() {
-        self.performSegue(withIdentifier: "HomeVCSegue", sender: nil)
-    }
 }
