@@ -9,7 +9,7 @@
 import UIKit
 import SDWebImage
 
-class MasterWeatherViewController: BaseViewController {
+class MasterWeatherViewController: BaseViewController, WeatherVCProtocol {
 
     @IBOutlet var mainSectionView: UIView!
     @IBOutlet var detailSectionView: UIView!
@@ -64,16 +64,16 @@ class MasterWeatherViewController: BaseViewController {
     }
 
     func setWeather(_ weather: Weather) {
-        self.wearthDesLabel.text = weather.description
-        self.tempLabel.text = weather.temp
-        self.humidityLabel.text = weather.humidity
-        self.pressureLabel.text = weather.pressure
-        self.minTempLabel.text = weather.minTemp
-        self.maxTempLabel.text = weather.maxTemp
+        self.wearthDesLabel.text = weather.daily.description
+        self.tempLabel.text = weather.main.temp
+        self.humidityLabel.text = weather.main.humidity
+        self.pressureLabel.text = weather.main.pressure
+        self.minTempLabel.text = weather.main.minTemp
+        self.maxTempLabel.text = weather.main.maxTemp
         self.sunriseLabel.text = weather.sunrise
         self.sunsetLabel.text = weather.sunset
         self.dateLabel.text = Date.todayString()
-        let imageUrl = URL(string: "https://openweathermap.org/img/w/\(weather.icon).png")
+        let imageUrl = Constants.weatherIconUrl(weather.daily.icon)
         self.wearthIconImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "xero"), options: .refreshCached, completed: nil)
     }
 }

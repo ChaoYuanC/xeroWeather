@@ -10,4 +10,7 @@ import Foundation
 
 struct Constants {
     static let CityEntity = "City"
+    static func weatherIconUrl(_ name: String) -> URL? {
+        return URL(string: "https://openweathermap.org/img/w/\(name).png")
+    }
 }

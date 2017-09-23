@@ -9,11 +9,10 @@
 import Foundation
 import Alamofire
 
-struct CurrentWeatherService: Service {
+struct CurrentWeatherService: Client {
     let host = WebConstants.host
     
     func send<T: Request>(_ r: T, _ handler: @escaping (WebResponse<T.Response>) -> Void) {
-        
         Alamofire.request(host+r.path, method: .get, parameters: r.parameter).validate().responseJSON { (response) in
             switch response.result {
             case .success(let json):
@@ -26,6 +25,26 @@ struct CurrentWeatherService: Service {
                 handler(.failure(error: error.localizedDescription))
             }
 
+        }
+    }
+}
+
+struct ForecastClient: Client {
+    let host = WebConstants.host
+    
+    func send<T: Request>(_ r: T, _ handler: @escaping (WebResponse<T.Response>) -> Void) {
+        Alamofire.request(host+r.path, method: .get, parameters: r.parameter).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(let json):
+                if let weather = T.Response.parse(json) {
+                    handler(.success(result: weather))
+                } else {
+                    handler(.failure(error: "Parse Forecast error"))
+                }
+            case .failure(let error):
+                handler(.failure(error: error.localizedDescription))
+            }
+            
         }
     }
 }

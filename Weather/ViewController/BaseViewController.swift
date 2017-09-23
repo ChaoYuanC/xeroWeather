@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol WeatherVCProtocol: class {
+    var cityId: Int64 { set get }
+}
+
 class BaseViewController: UIViewController {
 
     @IBOutlet var loadingView: UIView?

@@ -66,7 +66,7 @@ class HomeViewController: UIViewController {
     // MARK: - Segue
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? MasterWeatherViewController {
+        if let vc = segue.destination as? WeatherVCProtocol {
             guard let city = self.currentCity else {
                 return
             }

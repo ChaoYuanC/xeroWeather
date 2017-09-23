@@ -26,5 +26,17 @@ class WebService: NSObject {
         }
     }
     
+    func forecaset(_ cityId: Int64, _ completion: @escaping (Forecast?, String?) -> ()) {
+        let request = ForecastRequest(cityId)
+        
+        ForecastClient().send(request) { (response) in
+            switch response {
+            case .success(let result):
+                completion(result, nil)
+            case .failure(let message):
+                completion(nil, message)
+            }
+        }
+    }
 }
 

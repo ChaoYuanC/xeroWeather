@@ -21,7 +21,7 @@ protocol Request {
     associatedtype Response: Parser
 }
 
-protocol Service {
+protocol Client {
     func send<T: Request>(_ r: T, _ handler: @escaping (WebResponse<T.Response>) -> Void)
     var host: String { get }
 }
