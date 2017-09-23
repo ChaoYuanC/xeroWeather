@@ -8,6 +8,7 @@ target 'Weather' do
   # Pods for Weather
   pod 'SideMenu', '~> 3.0'
   pod 'Alamofire', '~> 4.5'
+  pod 'SDWebImage', '~> 4.1'
   
   target 'WeatherTests' do
     inherit! :search_paths

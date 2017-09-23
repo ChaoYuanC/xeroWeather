@@ -52,8 +52,8 @@ class CityManager: NSObject {
                         city.city = dic.stringValue("name")
                         city.country = dic.stringValue("country")
                         if let coordDic = dic.dictionaryValue("coord") {
-                            city.latitude = coordDic.DoubleValue("lat")
-                            city.longitude = coordDic.DoubleValue("lon")
+                            city.latitude = coordDic.doubleValue("lat")
+                            city.longitude = coordDic.doubleValue("lon")
                         } else {
                             city.latitude = 0.0
                             city.longitude = 0.0

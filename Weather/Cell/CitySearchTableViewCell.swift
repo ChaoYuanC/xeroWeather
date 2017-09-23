@@ -27,13 +27,6 @@ class CitySearchTableViewCell: UITableViewCell {
     func setup(_ city: City) {
         self.cityIdLabel.text = "Id: \(city.id)"
         
-        var string = ""
-        if let city = city.city {
-            string += "\(city), "
-        }
-        if let country = city.country {
-            string += country
-        }
-        self.nameLabel.text = string
+        self.nameLabel.text = city.locationString()
     }
 }

@@ -8,16 +8,22 @@
 
 import Foundation
 
-class CurrentWeatherRequest: Request {
+class BasicRequest {
+    fileprivate(set) var parameter: [String: Any]
+    
+    init() {
+        var para: Dictionary<String, Any> = ["appid": WebConstants.appId]
+        para["units"] = WebConstants.unit
+        self.parameter = para
+    }
+}
+
+class CurrentWeatherRequest: BasicRequest, Request {
     let path: String = "weather"
-    
-    let parameter: [String: Any]
-    
     typealias Response = Weather
     
     init(_ cityId: Int64) {
-        var para = Dictionary<String, Any>.appIdValue()
-        para["id"] = cityId
-        self.parameter = para
+        super.init()
+        self.parameter["id"] = cityId
     }
 }

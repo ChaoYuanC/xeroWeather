@@ -23,6 +23,20 @@ extension Dictionary where Key == String {
         return "unknow"
     }
     
+    func doubleValue(_ key: String) -> Double {
+        if let value = self[key] as? NSNumber {
+            return value.doubleValue
+        }
+        return 0
+    }
+    
+    func floatValue(_ key: String) -> Float {
+        if let value = self[key] as? NSNumber {
+            return value.floatValue
+        }
+        return 0
+    }
+    
     func dictionaryValue(_ key: String) -> Dictionary? {
         if let value = self[key] as? Dictionary {
             return value
@@ -30,17 +44,10 @@ extension Dictionary where Key == String {
         return nil
     }
     
-    func DoubleValue(_ key: String) -> Double {
-        if let value = self[key] as? String {
-            return Double(value) ?? 0.0
-        }
-        if let value = self[key] as? Double {
+    func arrayValue(_ key: String) -> Array<Any>? {
+        if let value = self[key] as? Array<Any> {
             return value
         }
-        return 0.0
-    }
-    
-    static func appIdValue() -> Dictionary {
-        return ["APPID": WebConstants.appId] as! Dictionary<String, Value>
+        return nil
     }
 }

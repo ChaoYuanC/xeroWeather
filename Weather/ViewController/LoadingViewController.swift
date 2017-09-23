@@ -53,7 +53,7 @@ class LoadingViewController: UIViewController {
         if let vc = segue.destination as? HomeViewController {
             CityManager.sharedInstance.fetchFavCities({ (cities) in
                 if cities.count > 0 {
-                    vc.currentCityId = cities[0].id
+                    vc.currentCity = cities[0]
                 }
             })
         }

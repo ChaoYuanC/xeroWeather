@@ -11,9 +11,14 @@ import SideMenu
 
 class HomeViewController: UIViewController {
     
-    var currentCityId: Int64 = 0 {
+    @IBOutlet var idLabel: UILabel!
+    @IBOutlet var cityLabel: UILabel!
+    
+    var currentCity: City? = nil {
         didSet {
-            self.reloadWeather()
+            if self.isViewLoaded {
+                self.reloadWeather()
+            }
         }
     }
 
@@ -23,7 +28,7 @@ class HomeViewController: UIViewController {
         // Do any additional setup after loading the view.
         SideMenuManager.menuAnimationBackgroundColor = UIColor(red: 0.0, green: 203/255, blue: 220/255, alpha: 1)
 
-        
+        self.reloadWeather()
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,16 +48,29 @@ class HomeViewController: UIViewController {
     */
     
     func reloadWeather() {
-        self.getCurrentWether()
+        guard let city = self.currentCity else {
+            return
+        }
+        // set location
+        self.setTitleSection(city)
+        
     }
-
-    func getCurrentWether() {
-        WebService.sharedInstance.currentWeather(self.currentCityId) { (weather, error) in
-            if let weather = weather {
-                print(weather)
-            } else if let error = error {
-                
+    
+    // MARK: - Title
+    func setTitleSection(_ city: City) {
+        self.idLabel.text = "Id: \(city.id)"
+        self.cityLabel.text = city.locationString()
+    }
+    
+    
+    // MARK: - Segue
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? MasterWeatherViewController {
+            guard let city = self.currentCity else {
+                return
             }
+            vc.cityId = city.id
         }
     }
 }

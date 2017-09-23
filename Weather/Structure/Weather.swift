@@ -8,11 +8,14 @@
 
 import Foundation
 
-
-
-
 struct Weather {
-//    let main: String
-//    let description: String
-//    let icon: String
+    let temp: String
+    let description: String
+    let icon: String
+    let humidity: String
+    let pressure: String
+    let minTemp: String
+    let maxTemp: String
+    let sunrise: String
+    let sunset: String
 }
