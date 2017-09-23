@@ -48,4 +48,14 @@ class LoadingViewController: UIViewController {
     func goHomeViewController() {
         self.performSegue(withIdentifier: "HomeVCSegue", sender: nil)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? HomeViewController {
+            CityManager.sharedInstance.fetchFavCities({ (cities) in
+                if cities.count > 0 {
+                    vc.currentCityId = cities[0].id
+                }
+            })
+        }
+    }
 }

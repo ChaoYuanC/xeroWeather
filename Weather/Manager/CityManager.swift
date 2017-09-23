@@ -88,7 +88,21 @@ class CityManager: NSObject {
             completion(true)
         } catch {
             completion(false)
-
+        }
+    }
+    
+    func fetchFavCities(_ completion: @escaping ([City]) -> ()) {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+        request.predicate = NSPredicate(format: "isFav == %@", NSNumber(value: true))
+        
+        do {
+            guard let cities = try self.contextManager.objectContextInstance.fetch(request) as? [City] else {
+                completion([])
+                return
+            }
+            completion(cities)
+        } catch {
+            completion([])
         }
     }
     

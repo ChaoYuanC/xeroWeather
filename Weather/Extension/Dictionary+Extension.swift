@@ -39,4 +39,8 @@ extension Dictionary where Key == String {
         }
         return 0.0
     }
+    
+    static func appIdValue() -> Dictionary {
+        return ["APPID": WebConstants.appId] as! Dictionary<String, Value>
+    }
 }

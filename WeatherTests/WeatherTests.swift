@@ -33,4 +33,8 @@ class WeatherTests: XCTestCase {
         }
     }
     
+    func testCurrentWeatherWhenCurrentWeahter() {
+        
+    }
+    
 }
