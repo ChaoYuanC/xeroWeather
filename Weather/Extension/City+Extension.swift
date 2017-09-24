@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension City {
+extension CityInfoProtocol {
     func locationString() -> String {
         var string = ""
         if let city = self.city {

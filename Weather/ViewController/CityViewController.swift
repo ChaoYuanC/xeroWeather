@@ -11,9 +11,11 @@ import ObjectiveC
 import CoreData
 import Foundation
 import Dispatch
+import CoreLocation
 
 protocol CityViewControllerDelegate: class {
     func selectedCity(_ city: City)
+    func reloadLocationWeather()
 }
 
 
@@ -58,6 +60,16 @@ class CityViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func reloadLocatonWeather() {
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedWhenInUse, .authorizedAlways:
+            self.delegate?.reloadLocationWeather()
+            self.dismiss(animated: true, completion: nil)
+        default:
+            self.showAlerWith("Please permit Weath to use location")
+        }
     }
     
     fileprivate func cityWithIndexPath(_ indexPath: IndexPath) -> City? {

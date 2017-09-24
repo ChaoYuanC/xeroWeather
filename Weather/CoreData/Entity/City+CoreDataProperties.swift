@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-extension City {
+extension City: CityInfoProtocol {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<City> {
         return NSFetchRequest<City>(entityName: "City")

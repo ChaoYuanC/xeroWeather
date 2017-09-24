@@ -15,7 +15,18 @@ class WebService: NSObject {
     
     func currentWeather(_ cityId: Int64, _ completion: @escaping (Weather?, String?) -> ()) {
         let request = CurrentWeatherRequest(cityId)
+        CurrentWeatherService().send(request) { (response) in
+            switch response {
+            case .success(let result):
+                completion(result, nil)
+            case .failure(let message):
+                completion(nil, message)
+            }
+        }
+    }
     
+    func locationWeather(_ lat: Double, _ lon: Double, _ completion: @escaping (Weather?, String?) -> ()) {
+        let request = CurrentWeatherRequest(lat, lon)
         CurrentWeatherService().send(request) { (response) in
             switch response {
             case .success(let result):

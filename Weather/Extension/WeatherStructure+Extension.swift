@@ -80,11 +80,17 @@ extension Weather: Parser {
 
         var sunrise = ""
         var sunset = ""
+        var country = ""
         if let sysDic = dic.dictionaryValue("sys") {
             sunrise = "Sunrise: " + Date.shortStyleTimeString(sysDic.doubleValue("sunrise"))
             sunset = "Sunset: " + Date.shortStyleTimeString(sysDic.doubleValue("sunset"))
+            country = sysDic.stringValue("country")
         }
-        return Weather(main: main, daily: daily, sunrise: sunrise, sunset: sunset)
+        
+        let city = dic.stringValue("name")
+        let id = dic.intValue("id")
+        
+        return Weather(main: main, daily: daily, sunrise: sunrise, sunset: sunset, city: city, country: country, id: Int64(id))
     }
 }
 

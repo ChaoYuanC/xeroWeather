@@ -8,6 +8,11 @@
 
 import UIKit
 import SDWebImage
+import CoreLocation
+
+protocol MasterWeatherVCDelegate: class {
+    func masterLocationWeatherFetched(_ weather: Weather)
+}
 
 class MasterWeatherViewController: BaseViewController, WeatherVCProtocol {
 
@@ -24,6 +29,10 @@ class MasterWeatherViewController: BaseViewController, WeatherVCProtocol {
     @IBOutlet var tempLabel: UILabel!
     @IBOutlet var wearthDesLabel: UILabel!
     
+    weak var delegate: MasterWeatherVCDelegate?
+    private var isLocationWeatherLoading = false
+    private let locationManager = CLLocationManager()
+    
     var cityId: Int64 = 0 {
         didSet {
             if self.isViewLoaded {
@@ -39,6 +48,8 @@ class MasterWeatherViewController: BaseViewController, WeatherVCProtocol {
         if cityId != 0 {
             self.reloadWeather(cityId)
         }
+        
+        locationManager.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,6 +75,18 @@ class MasterWeatherViewController: BaseViewController, WeatherVCProtocol {
             }
         }
     }
+    
+
+    
+    private func dealCurrentWeather(_ weather: Weather?, _ error: String?) {
+        if let weather = weather {
+            self.mainSectionView.isHidden = false
+            self.detailSectionView.isHidden = false
+            self.setWeather(weather)
+        } else if let error = error {
+            self.showAlerWith(error)
+        }
+    }
 
     func setWeather(_ weather: Weather) {
         self.wearthDesLabel.text = weather.daily.description
@@ -78,4 +101,40 @@ class MasterWeatherViewController: BaseViewController, WeatherVCProtocol {
         let imageUrl = Constants.weatherIconUrl(weather.daily.icon)
         self.wearthIconImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "xero"), options: .refreshCached, completed: nil)
     }
+}
+
+extension MasterWeatherViewController: CLLocationManagerDelegate {
+    
+    func reloadLocationWeather() {
+        self.locationManager.startUpdatingLocation()
+    }
+    
+    func reloadLocationWeather(_ lat: Double, _ lon: Double) {
+        self.mainSectionView.isHidden = true
+        self.detailSectionView.isHidden = true
+        self.hideloadingView(false)
+        self.isLocationWeatherLoading = true
+        WebService.sharedInstance.locationWeather(lat, lon) { (weather, error) in
+            self.hideloadingView(true)
+            self.isLocationWeatherLoading = false
+            if let weather = weather {
+                self.mainSectionView.isHidden = false
+                self.detailSectionView.isHidden = false
+                self.setWeather(weather)
+                // reload location
+                self.delegate?.masterLocationWeatherFetched(weather)
+            } else if let error = error {
+                self.showAlerWith(error)
+            }
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if !self.isLocationWeatherLoading  {
+            let location = locations[0]
+            self.reloadLocationWeather(location.coordinate.latitude, location.coordinate.longitude)
+            self.locationManager.stopUpdatingLocation()
+        }
+    }
+    
 }

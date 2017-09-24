@@ -9,7 +9,9 @@
 import UIKit
 import SideMenu
 
-class HomeViewController: UIViewController, DailyViewControllerPortocol, CityViewControllerDelegate {
+
+// TODO: Pull to refresh
+class HomeViewController: UIViewController, DailyViewControllerPortocol, CityViewControllerDelegate, MasterWeatherVCDelegate {
     
     @IBOutlet var idLabel: UILabel!
     @IBOutlet var cityLabel: UILabel!
@@ -19,14 +21,14 @@ class HomeViewController: UIViewController, DailyViewControllerPortocol, CityVie
     private weak var weaterhHourlyVC: ForecastViewController?
     private weak var weaterhDailyVC: DailyViewController?
 
-    var currentCity: City? = nil {
+    var currentCity: CityInfoProtocol? = nil {
         didSet {
             if self.isViewLoaded {
                 self.reloadWeather()
             }
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -69,7 +71,7 @@ class HomeViewController: UIViewController, DailyViewControllerPortocol, CityVie
     }
     
     // MARK: - Title
-    func setTitleSection(_ city: City) {
+    func setTitleSection(_ city: CityInfoProtocol) {
         self.idLabel.text = "Id: \(city.id)"
         self.cityLabel.text = city.locationString()
     }
@@ -87,6 +89,17 @@ class HomeViewController: UIViewController, DailyViewControllerPortocol, CityVie
         self.currentCity = city
     }
     
+    func reloadLocationWeather() {
+        self.weaterhMasterVC?.reloadLocationWeather()
+    }
+    
+    // MARK: -  MasterWeatherVCDelegate
+    
+    func masterLocationWeatherFetched(_ weather: Weather) {
+        self.setTitleSection(weather)
+        self.weaterhDailyVC?.cityId = weather.id
+        self.weaterhHourlyVC?.cityId = weather.id
+    }
     
     // MARK: - Segue
     
@@ -105,9 +118,10 @@ class HomeViewController: UIViewController, DailyViewControllerPortocol, CityVie
     
     func setSectionHandler(_ vc: UIViewController) {
         if let vc = vc as? DailyViewController {
-            vc.delegate = self;
+            vc.delegate = self
             self.weaterhDailyVC = vc
         } else if let vc = vc as? MasterWeatherViewController {
+            vc.delegate = self
             self.weaterhMasterVC = vc
         } else if let vc = vc as? ForecastViewController {
             self.weaterhHourlyVC = vc

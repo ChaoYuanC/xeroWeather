@@ -22,13 +22,16 @@ struct WeatherDaily: WeatherDailyProtocol {
     let icon: String
 }
 
-struct Weather: WeatherProtocol {
+struct Weather: WeatherProtocol, CityInfoProtocol {
     let main: WeatherMainProtocol
-    
     let daily: WeatherDailyProtocol
     
     let sunrise: String
     let sunset: String
+    
+    let city: String?
+    let country: String?
+    let id: Int64
 }
 
 struct WeatherWind: WeatherWindProtocol {

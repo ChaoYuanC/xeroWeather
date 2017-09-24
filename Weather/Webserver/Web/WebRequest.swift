@@ -26,6 +26,12 @@ class CurrentWeatherRequest: BasicRequest, Request {
         super.init()
         self.parameter["id"] = cityId
     }
+    
+    init(_ lat: Double, _ lon: Double) {
+        super.init()
+        self.parameter["lat"] = lat
+        self.parameter["lon"] = lon
+    }
 }
 
 class ForecastRequest: BasicRequest, Request {

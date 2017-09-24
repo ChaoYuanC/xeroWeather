@@ -8,6 +8,12 @@
 
 import Foundation
 
+protocol CityInfoProtocol {
+    var city: String? { get }
+    var country: String? { get }
+    var id: Int64 { get }
+}
+
 protocol WeatherMainProtocol {
     var temp: String { get }
     var minTemp: String { get }

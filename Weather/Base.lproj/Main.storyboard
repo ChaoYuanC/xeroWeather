@@ -192,8 +192,21 @@
                                     <outlet property="delegate" destination="6g8-wA-3Lf" id="2YN-3Q-QCG"/>
                                 </connections>
                             </searchBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tpk-u9-uqr">
+                                <rect key="frame" x="14" y="86" width="347" height="40"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="bdZ-jn-E50"/>
+                                </constraints>
+                                <state key="normal" title=" Location Based Forecast" image="location">
+                                    <color key="titleColor" red="1" green="0.57644314240000005" blue="0.26692708329999998" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="reloadLocatonWeather" destination="6g8-wA-3Lf" eventType="touchUpInside" id="ofo-9I-7z8"/>
+                                </connections>
+                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bt5-G9-f56">
-                                <rect key="frame" x="0.0" y="76" width="375" height="591"/>
+                                <rect key="frame" x="0.0" y="136" width="375" height="531"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="6g8-wA-3Lf" id="ITr-Dc-sFD"/>
@@ -203,12 +216,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="983-lf-Iy5" firstAttribute="trailing" secondItem="tpk-u9-uqr" secondAttribute="trailing" constant="14" id="0XB-dJ-cT5"/>
                             <constraint firstItem="983-lf-Iy5" firstAttribute="bottom" secondItem="Bt5-G9-f56" secondAttribute="bottom" id="4O6-Uu-RYP"/>
                             <constraint firstItem="bQI-CP-8hu" firstAttribute="top" secondItem="983-lf-Iy5" secondAttribute="top" id="APb-GC-got"/>
+                            <constraint firstItem="tpk-u9-uqr" firstAttribute="leading" secondItem="983-lf-Iy5" secondAttribute="leading" constant="14" id="JCP-Xm-Giy"/>
                             <constraint firstItem="983-lf-Iy5" firstAttribute="trailing" secondItem="Bt5-G9-f56" secondAttribute="trailing" id="LGJ-No-OZW"/>
                             <constraint firstItem="bQI-CP-8hu" firstAttribute="leading" secondItem="983-lf-Iy5" secondAttribute="leading" id="OyY-wc-l3C"/>
+                            <constraint firstItem="Bt5-G9-f56" firstAttribute="top" secondItem="tpk-u9-uqr" secondAttribute="bottom" constant="10" id="Vzf-a8-FlH"/>
                             <constraint firstItem="Bt5-G9-f56" firstAttribute="leading" secondItem="983-lf-Iy5" secondAttribute="leading" id="YxW-dG-LXf"/>
-                            <constraint firstItem="Bt5-G9-f56" firstAttribute="top" secondItem="bQI-CP-8hu" secondAttribute="bottom" id="fEo-XC-rLW"/>
+                            <constraint firstItem="tpk-u9-uqr" firstAttribute="top" secondItem="bQI-CP-8hu" secondAttribute="bottom" constant="10" id="gfg-qM-6h1"/>
                             <constraint firstAttribute="trailing" secondItem="bQI-CP-8hu" secondAttribute="trailing" id="y1Y-cL-kjb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="983-lf-Iy5"/>
@@ -221,7 +237,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hYD-60-D1Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-639" y="853"/>
+            <point key="canvasLocation" x="-295.19999999999999" y="838.83058470764627"/>
         </scene>
         <!--Master Weather View Controller-->
         <scene sceneID="SpA-5w-CwP">
