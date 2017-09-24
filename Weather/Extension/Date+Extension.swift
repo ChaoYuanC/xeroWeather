@@ -21,4 +21,11 @@ extension Date {
         formatter.dateStyle = .medium
         return formatter.string(from: Date())
     }
+    
+    static func mediumDateString(_ seconds: TimeInterval) -> String {
+        let date = Date(timeIntervalSince1970: seconds)
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter.string(from: date)
+    }
 }

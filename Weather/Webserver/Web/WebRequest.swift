@@ -37,3 +37,13 @@ class ForecastRequest: BasicRequest, Request {
         self.parameter["id"] = cityId
     }
 }
+
+class DailyRequest: BasicRequest, Request {
+    let path: String = "forecast/daily"
+    typealias Response = Daily
+    
+    init(_ cityId: Int64) {
+        super.init()
+        self.parameter["id"] = cityId
+    }
+}

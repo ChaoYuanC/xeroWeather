@@ -38,5 +38,18 @@ class WebService: NSObject {
             }
         }
     }
+    
+    func daily(_ cityId: Int64, _ completion: @escaping (Daily?, String?) -> ()) {
+        let request = DailyRequest(cityId)
+        
+        DailyClient().send(request) { (response) in
+            switch response {
+            case .success(let result):
+                completion(result, nil)
+            case .failure(let message):
+                completion(nil, message)
+            }
+        }
+    }
 }
 

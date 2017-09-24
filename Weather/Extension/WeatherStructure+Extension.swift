@@ -82,3 +82,46 @@ extension Forecast: Parser {
         return Forecast(hourly: hourlyArray)
     }
 }
+
+extension Daily: Parser {
+    static func parse(_ data: Any) -> Daily? {
+        print(data)
+        guard let dic = data as? Dictionary<String, Any> else {
+            return nil
+        }
+        guard let array = dic.arrayValue("list") else {
+            return nil
+        }
+        
+        var dailyArray: Array<ForecastDaily> = []
+        for dailyDic in array {
+            if let dailyDic = dailyDic as? Dictionary<String, Any> {
+                let humidity = "Humidity: \(dailyDic.floatValue("humidity"))%"
+                let pressure = "Pressure: \(dailyDic.floatValue("pressure"))Pa"
+                
+                var temp: String = ""
+                var minTemp: String = ""
+                var maxTemp: String = ""
+                var tempFloat: Float = 0.0
+                if let tempDic = dailyDic.dictionaryValue("temp") {
+                    let minTempFloat = tempDic.floatValue("min")
+                    let maxTempFloat = tempDic.floatValue("max")
+                    minTemp = "\(minTempFloat)℃"
+                    maxTemp = "\(maxTempFloat)℃"
+                    tempFloat = (minTempFloat+maxTempFloat)/2
+                    temp = "\(tempFloat)℃"
+
+                }
+                let weatherMain = WeatherMain(temp: temp, humidity: humidity, pressure: pressure, minTemp: minTemp, maxTemp: maxTemp, tempFloat: tempFloat)
+                
+                let array = dailyDic.arrayValue("weather")
+                let weartherDic = array?[0] as? Dictionary<String, Any>
+                let daily = WeatherDaily.parse(weartherDic)
+                let dateString =  Date.mediumDateString(dailyDic.doubleValue("dt"))
+
+                dailyArray.append(ForecastDaily(main: weatherMain, daily: daily, dateString: dateString))
+            }
+        }
+        return Daily(daily: dailyArray)
+    }
+}

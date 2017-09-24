@@ -36,6 +36,17 @@ struct ForecastHourly: WeatherProtocol {
     let daily: WeatherDailyProtocol
     let shortTime: String
 }
+
 struct Forecast {
     let hourly: Array<ForecastHourly>
+}
+
+struct ForecastDaily: WeatherProtocol {
+    let main: WeatherMainProtocol
+    let daily: WeatherDailyProtocol
+    let dateString: String
+}
+
+struct Daily {
+    let daily: Array<ForecastDaily>
 }

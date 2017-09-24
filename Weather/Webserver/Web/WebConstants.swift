@@ -9,8 +9,8 @@
 import Foundation
 
 struct WebConstants {
-    static let host = "https://api.openweathermap.org/data/2.5/"
-    static let appId = "2d84094be622f15f6d7a15c39de46cc5"
+    static let host = "https://openweathermap.org/data/2.5/"
+    static let appId = "b1b15e88fa797225412429c1c50c122a1"
     static let unit = "metric"
 
 }

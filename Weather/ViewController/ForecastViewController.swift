@@ -54,13 +54,10 @@ class ForecastViewController: BaseViewController, WeatherVCProtocol {
     // MARK: -
     
     func reloadWeather(_ id: Int64) {
-//        self.mainSectionView.isHidden = true
-//        self.detailSectionView.isHidden = true
         self.hideloadingView(false)
         WebService.sharedInstance.forecaset(id) { (result, message) in
             self.hideloadingView(true)
             if let result = result {
-                print(result)
                 self.setForecastView(result.hourly)
             } else if let message = message {
                 self.showAlerWith(message)
@@ -79,7 +76,7 @@ class ForecastViewController: BaseViewController, WeatherVCProtocol {
         self.scrollView.contentSize = CGSize(width: self.hourlyWidth *  CGFloat(hourlyArray.count), height: self.hourlyHeight)
         
         for index in 0...hourlyArray.count-1 {
-            let hourlyView = HourlyView.fromNib()
+            let hourlyView = Bundle.main.loadNibNamed("HourlyView", owner: nil, options: nil)![0] as! HourlyView
             hourlyView.frame = CGRect(x: self.hourlyWidth * CGFloat(index), y: 0.0, width: self.hourlyWidth, height: self.hourlyHeight)
             hourlyView.setHourlyData(hourlyArray[index])
             self.scrollView.addSubview(hourlyView)

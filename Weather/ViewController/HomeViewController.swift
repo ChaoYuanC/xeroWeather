@@ -9,10 +9,12 @@
 import UIKit
 import SideMenu
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, DailyViewControllerPortocol {
     
     @IBOutlet var idLabel: UILabel!
     @IBOutlet var cityLabel: UILabel!
+    @IBOutlet var contentHeight: NSLayoutConstraint!
+    
     
     var currentCity: City? = nil {
         didSet {
@@ -62,6 +64,13 @@ class HomeViewController: UIViewController {
         self.cityLabel.text = city.locationString()
     }
     
+    // MARK: - DailyViewControllerPortocol
+    
+    func contentHeight(_ height: CGFloat) {
+        self.contentHeight.constant = height
+        self.view.layoutIfNeeded()
+    }
+    
     
     // MARK: - Segue
     
@@ -71,6 +80,10 @@ class HomeViewController: UIViewController {
                 return
             }
             vc.cityId = city.id
+            
+            if let dailyVC = vc as? DailyViewController {
+                dailyVC.delegate = self;
+            }
         }
     }
 }
