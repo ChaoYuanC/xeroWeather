@@ -46,7 +46,7 @@ class CityManager: NSObject {
                     
                     for dic in cityJson {
                         guard let city = NSEntityDescription.insertNewObject(forEntityName: "City", into: self.contextManager.objectContextInstance) as? City else {
-                            abort()
+                            continue
                         }
                         city.id = Int64(dic.intValue("id"))
                         city.city = dic.stringValue("name")

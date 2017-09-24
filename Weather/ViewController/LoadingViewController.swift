@@ -19,6 +19,7 @@ enum LocationStatus {
 class LoadingViewController: UIViewController {
 
     @IBOutlet var indicator: UIActivityIndicatorView!
+    @IBOutlet var loadingTipLabel: UILabel!
     
     private let locationManager = CLLocationManager()
     private var fetchedCitiesComplete = false
@@ -52,6 +53,7 @@ class LoadingViewController: UIViewController {
     func fetchCities() {
         CityManager.sharedInstance.fetchCities {
             self.fetchedCitiesComplete = true
+            self.loadingTipLabel.text = "Fetching cities complete"
             self.goHomeViewController()
         }
     }
@@ -128,8 +130,12 @@ extension LoadingViewController: CLLocationManagerDelegate {
         case .authorizedWhenInUse, .authorizedAlways:
             // do nothing, waithing for location update
             break
-        default:
+        case .denied:
+            self.locationStatus = .denied
             self.goHomeViewController()
+        default:
+            break
+
         }
     }
     
