@@ -32,7 +32,9 @@ class DailyViewController: BaseViewController, WeatherVCProtocol {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.reloadWeather(cityId)
+        if cityId != 0 {
+            self.reloadWeather(cityId)
+        }
 
     }
 

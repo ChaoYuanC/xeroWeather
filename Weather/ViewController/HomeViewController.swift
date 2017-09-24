@@ -32,7 +32,7 @@ class HomeViewController: UIViewController, DailyViewControllerPortocol, CityVie
 
         // Do any additional setup after loading the view.
         SideMenuManager.menuAnimationBackgroundColor = UIColor(red: 0.0, green: 203/255, blue: 220/255, alpha: 1)
-
+        
         self.reloadWeather()
     }
 
@@ -41,16 +41,21 @@ class HomeViewController: UIViewController, DailyViewControllerPortocol, CityVie
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.checkCurrentCity()
     }
-    */
+
+    func checkCurrentCity() {
+        if self.currentCity == nil {
+            let alert = UIAlertController(title: "Tip", message: "No city selected, please go to city list and select one. :)", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .cancel, handler: { (action) in
+                self.performSegue(withIdentifier: "CityListSegue", sender: nil)
+            })
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
     
     func reloadWeather() {
         guard let city = self.currentCity else {
@@ -87,11 +92,12 @@ class HomeViewController: UIViewController, DailyViewControllerPortocol, CityVie
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? WeatherVCProtocol {
+            self.setSectionHandler(segue.destination)
+
             guard let city = self.currentCity else {
                 return
             }
             vc.cityId = city.id
-            self.setSectionHandler(segue.destination)
         } else if let navi = segue.destination as? UISideMenuNavigationController, let vc = navi.viewControllers[0] as? CityViewController {
             vc.delegate = self
         }

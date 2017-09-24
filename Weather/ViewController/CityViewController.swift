@@ -127,6 +127,7 @@ extension CityViewController: UITableViewDelegate {
                 self.searchBar.text = nil
                 self.fetchFavCities()
             })
+            self.isSearchMode = false
         } else {
             self.delegate?.selectedCity(city)
             self.dismiss(animated: true, completion: nil)
