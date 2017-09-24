@@ -9,13 +9,16 @@
 import UIKit
 import SideMenu
 
-class HomeViewController: UIViewController, DailyViewControllerPortocol {
+class HomeViewController: UIViewController, DailyViewControllerPortocol, CityViewControllerDelegate {
     
     @IBOutlet var idLabel: UILabel!
     @IBOutlet var cityLabel: UILabel!
     @IBOutlet var contentHeight: NSLayoutConstraint!
     
-    
+    private weak var weaterhMasterVC: MasterWeatherViewController?
+    private weak var weaterhHourlyVC: ForecastViewController?
+    private weak var weaterhDailyVC: DailyViewController?
+
     var currentCity: City? = nil {
         didSet {
             if self.isViewLoaded {
@@ -55,7 +58,9 @@ class HomeViewController: UIViewController, DailyViewControllerPortocol {
         }
         // set location
         self.setTitleSection(city)
-        
+        self.weaterhMasterVC?.cityId = city.id
+        self.weaterhDailyVC?.cityId = city.id
+        self.weaterhHourlyVC?.cityId = city.id
     }
     
     // MARK: - Title
@@ -71,6 +76,12 @@ class HomeViewController: UIViewController, DailyViewControllerPortocol {
         self.view.layoutIfNeeded()
     }
     
+    // MARK: - CityViewControllerDelegate
+    
+    func selectedCity(_ city: City) {
+        self.currentCity = city
+    }
+    
     
     // MARK: - Segue
     
@@ -80,10 +91,21 @@ class HomeViewController: UIViewController, DailyViewControllerPortocol {
                 return
             }
             vc.cityId = city.id
-            
-            if let dailyVC = vc as? DailyViewController {
-                dailyVC.delegate = self;
-            }
+            self.setSectionHandler(segue.destination)
+        } else if let navi = segue.destination as? UISideMenuNavigationController, let vc = navi.viewControllers[0] as? CityViewController {
+            vc.delegate = self
         }
+    }
+    
+    func setSectionHandler(_ vc: UIViewController) {
+        if let vc = vc as? DailyViewController {
+            vc.delegate = self;
+            self.weaterhDailyVC = vc
+        } else if let vc = vc as? MasterWeatherViewController {
+            self.weaterhMasterVC = vc
+        } else if let vc = vc as? ForecastViewController {
+            self.weaterhHourlyVC = vc
+        }
+        
     }
 }

@@ -22,6 +22,11 @@ protocol WeatherDailyProtocol {
     var description: String { get }
 }
 
+protocol WeatherWindProtocol {
+    var windSpeed: String { get }
+    var windDirection: String { get }
+}
+
 protocol WeatherProtocol {
     var main: WeatherMainProtocol { get }
     var daily: WeatherDailyProtocol { get }

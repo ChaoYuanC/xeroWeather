@@ -12,10 +12,17 @@ import CoreData
 import Foundation
 import Dispatch
 
+protocol CityViewControllerDelegate: class {
+    func selectedCity(_ city: City)
+}
+
+
 class CityViewController: UIViewController {
 
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var tableView: UITableView!
+    
+    weak var delegate: CityViewControllerDelegate?
     
     fileprivate let citySearchCellIdentifier = "CitySearchTableViewCell"
     fileprivate var isSearchMode = false
@@ -111,15 +118,18 @@ extension CityViewController: UITableViewDataSource {
 
 extension CityViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let city = self.cityWithIndexPath(indexPath) else {
+            return
+        }
         if self.isSearchMode {
-            guard let city = self.cityWithIndexPath(indexPath) else {
-                return
-            }
             CityManager.sharedInstance.setFavCity(city.id, true, { (success) in
                 self.searchBar.resignFirstResponder()
                 self.searchBar.text = nil
                 self.fetchFavCities()
             })
+        } else {
+            self.delegate?.selectedCity(city)
+            self.dismiss(animated: true, completion: nil)
         }
     }
 }

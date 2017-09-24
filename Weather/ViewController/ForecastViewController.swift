@@ -13,7 +13,7 @@ class ForecastViewController: BaseViewController, WeatherVCProtocol {
     @IBOutlet var scrollView: UIScrollView!
     
     private let hourlyWidth: CGFloat = 60.0
-    private let hourlyHeight: CGFloat = 200.0
+    private let hourlyHeight: CGFloat = 220.0
     private let hourlyCurveMinY: CGFloat = 35.0
     private let hourlyCurveMaxY: CGFloat = 100.0
     private let hourlyCurveStartX: CGFloat
@@ -72,6 +72,7 @@ class ForecastViewController: BaseViewController, WeatherVCProtocol {
         for view in self.scrollView.subviews {
             view.removeFromSuperview()
         }
+        self.scrollView.layer.sublayers = nil
         
         self.scrollView.contentSize = CGSize(width: self.hourlyWidth *  CGFloat(hourlyArray.count), height: self.hourlyHeight)
         

@@ -14,6 +14,8 @@ protocol DailyViewControllerPortocol: class {
 
 class DailyViewController: BaseViewController, WeatherVCProtocol {
     
+    @IBOutlet var contentView: UIView!
+    
     private let dailyViewHeight: CGFloat = 80
     
     weak var delegate: DailyViewControllerPortocol? = nil
@@ -55,7 +57,7 @@ class DailyViewController: BaseViewController, WeatherVCProtocol {
     }
 
     func setDailyView(_ dailyArray: Array<ForecastDaily>) {
-        for view in self.view.subviews {
+        for view in self.contentView.subviews {
             view.removeFromSuperview()
         }
         
@@ -64,9 +66,9 @@ class DailyViewController: BaseViewController, WeatherVCProtocol {
         
         for index in 0...dailyArray.count-1 {
             let dailyView = Bundle.main.loadNibNamed("ForecastDailyView", owner: nil, options: nil)![0] as! ForecastDailyView
-            dailyView.frame = CGRect(x: 0, y: self.dailyViewHeight * CGFloat(index), width: self.view.frame.size.width, height: self.dailyViewHeight)
+            dailyView.frame = CGRect(x: 0, y: self.dailyViewHeight * CGFloat(index), width: self.contentView.frame.size.width, height: self.dailyViewHeight)
             dailyView.setHourlyData(dailyArray[index])
-            self.view.addSubview(dailyView)
+            self.contentView.addSubview(dailyView)
         }
         
 

@@ -31,10 +31,16 @@ struct Weather: WeatherProtocol {
     let sunset: String
 }
 
+struct WeatherWind: WeatherWindProtocol {
+    let windSpeed: String
+    let windDirection: String
+}
+
 struct ForecastHourly: WeatherProtocol {
     let main: WeatherMainProtocol
     let daily: WeatherDailyProtocol
     let shortTime: String
+    let wind: WeatherWindProtocol
 }
 
 struct Forecast {

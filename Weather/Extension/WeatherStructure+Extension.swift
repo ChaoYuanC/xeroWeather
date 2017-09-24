@@ -37,7 +37,36 @@ extension WeatherDaily {
     }
 }
 
-
+extension WeatherWind {
+    static func parse(_ data: Any?) -> WeatherWind {
+        guard let dic = data as? Dictionary<String, Any> else {
+            return WeatherWind(windSpeed: "", windDirection: "")
+        }
+        let speed = dic.floatValue("speed")
+        let speedString = "\(speed)km"
+        
+        let deg = dic.floatValue("deg")
+        var direction = ""
+        if ((deg >= 337.5 && deg <= 360) || (deg >= 0 && deg < 22.5)) {
+            direction = "N"
+        } else if deg >= 15 && deg < 75 {
+            direction = "NE"
+        } else if deg >= 67.5 && deg < 112.5 {
+            direction = "E"
+        } else if deg >= 112.5 && deg < 157.5 {
+            direction = "SE"
+        } else if deg >= 157.5 && deg < 202.5 {
+            direction = "S"
+        } else if deg >= 202.5 && deg < 247.5 {
+            direction = "SW"
+        } else if deg >= 247.5 && deg < 292.5 {
+            direction = "W"
+        } else if deg >= 292.5 && deg < 337.5 {
+            direction = "NW"
+        }
+        return WeatherWind(windSpeed: speedString, windDirection: direction)
+    }
+}
 
 extension Weather: Parser {
     static func parse(_ data: Any) -> Weather? {
@@ -76,7 +105,9 @@ extension Forecast: Parser {
                 let weartherDic = array?[0] as? Dictionary<String, Any>
                 let daily = WeatherDaily.parse(weartherDic)
                 let shortTime =  Date.shortStyleTimeString(hourlyDic.doubleValue("dt"))
-                hourlyArray.append(ForecastHourly(main: main, daily: daily, shortTime: shortTime))
+                
+                let wind = WeatherWind.parse(hourlyDic.dictionaryValue("wind"))
+                hourlyArray.append(ForecastHourly(main: main, daily: daily, shortTime: shortTime, wind: wind))
             }
         }
         return Forecast(hourly: hourlyArray)
