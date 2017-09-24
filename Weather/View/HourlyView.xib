@@ -41,6 +41,14 @@
                         <constraint firstAttribute="height" constant="1" id="QpW-z9-haJ"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LQL-Ka-2LJ">
+                    <rect key="frame" x="49" y="126" width="1" height="10"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="10" id="XJK-Iu-rKq"/>
+                        <constraint firstAttribute="width" constant="1" id="r5Z-cg-4Ia"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -51,6 +59,8 @@
                 <constraint firstItem="eVP-6A-Gu5" firstAttribute="top" secondItem="aJu-Jl-SgN" secondAttribute="bottom" constant="5" id="NgN-Pj-UpA"/>
                 <constraint firstItem="aJu-Jl-SgN" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="f7P-0Q-AD4"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Nbl-hL-SiH" secondAttribute="trailing" id="lJf-tj-s0B"/>
+                <constraint firstAttribute="trailing" secondItem="LQL-Ka-2LJ" secondAttribute="trailing" id="o08-uT-poB"/>
+                <constraint firstItem="LQL-Ka-2LJ" firstAttribute="top" secondItem="Nbl-hL-SiH" secondAttribute="bottom" id="olq-qQ-wlG"/>
                 <constraint firstItem="kWh-vk-T48" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="sqr-c6-A1P"/>
                 <constraint firstItem="eVP-6A-Gu5" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ySX-Vf-AYN"/>
             </constraints>

@@ -14,6 +14,7 @@ struct WeatherMain: WeatherMainProtocol {
     let pressure: String
     let minTemp: String
     let maxTemp: String
+    let tempFloat: Float
 }
 
 struct WeatherDaily: WeatherDailyProtocol {

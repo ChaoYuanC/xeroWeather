@@ -11,15 +11,16 @@ import Foundation
 extension WeatherMain {
     static func parse(_ data: Any?) -> WeatherMain {
         guard let dic = data as? Dictionary<String, Any> else {
-            return WeatherMain(temp: "", humidity: "", pressure: "", minTemp: "", maxTemp: "")
+            return WeatherMain(temp: "", humidity: "", pressure: "", minTemp: "", maxTemp: "", tempFloat: 0.0)
         }
         let temp = "\(dic.floatValue("temp"))℃"
         let minTemp = "\(dic.floatValue("temp_min"))℃"
         let maxTemp = "\(dic.floatValue("temp_max"))℃"
         let humidity = "Humidity: \(dic.floatValue("humidity"))%"
         let pressure = "Pressure: \(dic.floatValue("pressure"))Pa"
+        let tempFloat = dic.floatValue("temp")
         
-        return WeatherMain(temp: temp, humidity: humidity, pressure: pressure, minTemp: minTemp, maxTemp: maxTemp)
+        return WeatherMain(temp: temp, humidity: humidity, pressure: pressure, minTemp: minTemp, maxTemp: maxTemp, tempFloat: tempFloat)
     }
 }
 

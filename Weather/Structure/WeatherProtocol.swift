@@ -14,6 +14,7 @@ protocol WeatherMainProtocol {
     var maxTemp: String { get }
     var humidity: String { get }
     var pressure: String { get }
+    var tempFloat: Float { get }
 }
 
 protocol WeatherDailyProtocol {
